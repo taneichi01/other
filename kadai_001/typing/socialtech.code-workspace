@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../html_css/socialtech"
+		},
+		{
+			"path": "../other/javascript-basic"
+		}
+	],
+	"settings": {
+		"editor.acceptSuggestionOnEnter": "off"
+	}
+}
