@@ -25,3 +25,7 @@ body {
 .mistyped {
     background-color: rgb(251, 155, 71);
 }
+
+#typecount {
+    font-size: 2rem;
+}

@@ -2,6 +2,8 @@
 let untyped = '';
 let typed = '';
 let score = 0;
+//h変数の初期化
+let typecount = '';
 
 //必要なHTML要素の取得
 const untypedfield = document.getElementById('untyped');
@@ -9,6 +11,7 @@ const typedfield = document.getElementById('typed');
 const wrap = document.getElementById('wrap');
 const start = document.getElementById('start');
 const count = document.getElementById('count');
+const typecountfield = document.getElementById('typecount');
 
 // 複数のテキストを格納する配列
 const textLists = [
@@ -54,19 +57,21 @@ const keyPress = e => {
         }, 100);
         return;
     }
-
     //正タイプの場合
+    typecount += untyped.substring(0,1);
+    untyped = untyped.substring(1);
+    typecountfield.textContent = typed;
+    untypedfield.textContent = untyped;
+
     score++;
     typed += untyped.substring(0, 1);
     untyped = untyped.substring(1);
     typedfield.textContent = typed;
     untypedfield.textContent = untyped;
-
     //テキストがなくなったら新しいテキストを表示
-    if(untyped === '') {
+    if (untyped === '') {
         createText();
     }
-
 };
 
 
@@ -76,16 +81,15 @@ const rankCheck = score => {
     //テキストを格納する変数を作る
     let text = '';
     //スコアに応じて異なるメッセージを変数textに格納する
-    if(score < 100) {
+    if (score < 100) {
         text = `あなたのランクはCです。\nBランクまであと${100 - score}文字です。`;
-    } else if(score < 200) {
-         text = `あなたのランクはBです。\nAランクまであと${200 - score}文字です。`;
-    } else if(score < 300) {
+    } else if (score < 200) {
+        text = `あなたのランクはBです。\nAランクまであと${200 - score}文字です。`;
+    } else if (score < 300) {
         text = `あなたのランクはAです。\nSランクまであと${300 - score}文字です。`;
-    } else if(score >= 300){
+    } else if (score >= 300) {
         text = `あなたのランクはSです。\nおめでとうございます!`;
     }
-
     //生成したメッセージと一緒に文字列を返す
     return `${score}文字打てました!\n${text}\n 【OK】リトライ / 【キャンセル】終了`;
 };
@@ -98,7 +102,7 @@ const gameOver = id => {
     const result = confirm(rankCheck(score));
 
     //OKボタンをクリックされたらリロードする
-    if(result == true) {
+    if (result == true) {
         window.location.reload();
     }
 };
@@ -115,7 +119,7 @@ const timer = () => {
         count.textContent = time;
 
         // カウントが0になったらタイマーを停止する
-        if(time <= 0) {
+        if (time <= 0) {
             //clearInterval(id);
             gameOver(id);
         }
