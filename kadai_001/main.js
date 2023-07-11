@@ -3,7 +3,7 @@ let untyped = '';
 let typed = '';
 let score = 0;
 //h変数の初期化
-let typecount = '';
+let typecount = 0;
 
 //必要なHTML要素の取得
 const untypedfield = document.getElementById('untyped');
@@ -57,12 +57,6 @@ const keyPress = e => {
         }, 100);
         return;
     }
-    //正タイプの場合
-    typecount += untyped.substring(0,1);
-    untyped = untyped.substring(1);
-    typecountfield.textContent = typed;
-    untypedfield.textContent = untyped;
-
     score++;
     typed += untyped.substring(0, 1);
     untyped = untyped.substring(1);
@@ -73,8 +67,6 @@ const keyPress = e => {
         createText();
     }
 };
-
-
 
 // タイピングスキルのランクを判定
 const rankCheck = score => {
@@ -126,6 +118,20 @@ const timer = () => {
     }, 1000);
 };
 
+//// タイプカウント数  
+const countkeyPress = e => {
+    //誤タイプの場合
+    if (e.key !== untyped.substring(0, 1)) {
+        return;
+    }
+    //正タイプの場合
+    typecount++;
+    typecountfield += untyped.substring(0, 1);
+    untyped = untyped.substring(1);
+    typedfield.textContent = typed;
+    untypedfield.textContent = untyped;
+}
+
 // ゲームスタート時の処理
 start.addEventListener('click', () => {
     //カウントダウンタイマーを開始する
@@ -136,6 +142,7 @@ start.addEventListener('click', () => {
     start.style.display = 'none';
     //キーボードのイベント処理
     document.addEventListener('keypress', keyPress);
+    document.addEventListener('keypress', countkeyPress);
 });
 
 untypedfield.textContent = 'スタートボタンで開始';
